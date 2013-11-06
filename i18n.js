@@ -32,7 +32,7 @@ i18n.setLanguage = function(language) {
   i18n._dep.changed();
 };
 i18n.setDefaultLanguage = function(language) {
-  i18n._default = 'language';
+  i18n._default = language;
   i18n._dep.changed();
 };
 i18n.getLanguage = function() {
