@@ -26,7 +26,7 @@ Example: `{{i18n "store.purchase"}}`.
 
 Add new text map.
 
-Example:
+Example (nested syntax):
 
     i18n.map('en', {
       hello: 'world',
@@ -35,7 +35,15 @@ Example:
         basket: 'basket',
       },
     });
+    
 
+Example (flat syntax):
+
+    i18n.map('en', {
+      'hello': 'world',
+      'store.purchase':'buy now',
+      'store.basket': 'basket'
+    });    
 
 
 ## `i18n.setLanguage(language)`
