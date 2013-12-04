@@ -51,7 +51,7 @@ Example: `i18n.setLanguage('en_US')`.
 Set your default language. This is the base language, if there is no translation to the currently chosen one,
 default language will be used instead.
 
-Example: `i18n.setLanguage('en_US')`.
+Example: `i18n.setDefaultLanguage('en_US')`.
 
 
 
