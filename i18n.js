@@ -7,6 +7,8 @@ var maps = {};
 var defaultLanguage = 'en';
 var language = '';
 var dep = new Deps.Dependency();
+var missingTemplate = '';
+var showMissing = false;
 
 /*
   Get the value for the given key
@@ -16,6 +18,7 @@ i18n = function(label) {
   if(typeof label !== 'string') return '';
   return (maps[language] && maps[language][label]) ||
          (maps[defaultLanguage] && maps[defaultLanguage][label]) ||
+         (showMissing && _.template(missingTemplate, {language: language, defaultLanguage: defaultLanguage, label: label})) ||
          '';
 };
 
@@ -49,6 +52,21 @@ i18n.getLanguage = function() {
   dep.depend();
   return language;
 };
+
+i18n.showMissing = function(template) {
+  if(template) {
+    if(typeof template === string) {
+      missingTemplate = template;
+    } else {
+      missingTemplate = '[<%= label %>]';
+    }
+    showMissing = true;
+  } else {
+    missingTemplate = '';
+    showMissing = false;
+  }
+};
+
 
 /*
   Registering map

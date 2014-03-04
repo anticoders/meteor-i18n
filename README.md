@@ -59,3 +59,24 @@ Example: `i18n.setDefaultLanguage('en_US')`.
 ## `i18n.getLanguage()`
 
 Get the current language code.
+
+## Advanced options
+
+### `i18n.showMissing(missing)`
+
+Decide whether to show a warning when there's no translation in the current and default language.
+
+- `false`: Display nothing (default).
+- `true`: Display the placeholder in default format, `[<%= label %>]`.
+- *String*: Display the placeholder in custom format. The given string will be used as underscore template with the following parameters:
+    - `label`
+    - `language`
+    - `defaultLanguage`
+
+Example: `i18n.showMissing('[no translation for "<%= label %>" in <%= language %>]');`
+
+
+
+
+
+
