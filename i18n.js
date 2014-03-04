@@ -1,4 +1,3 @@
-
 var get = function(object, array) {
   var o = object;
   for(var i in array) {
@@ -13,7 +12,7 @@ i18n = function(label) {
   if(typeof label !== 'string') return '';
   var array = label.split('.');
   return get(i18n._maps[i18n._language], array) || get(i18n._maps[i18n._default], array) || '';
-} 
+}
 
 if(Meteor.isClient) {
   Handlebars.registerHelper('i18n', function(x) {
@@ -42,11 +41,23 @@ i18n.getLanguage = function() {
 
 i18n.map = function(language, map) {
   if(!i18n._maps[language]) i18n._maps[language] = {};
-  _.extend(i18n._maps[language], map);
+  extend(i18n._maps[language], map);
   i18n._dep.changed();
 };
 
 
+var extend = function(dest, from) {
+  var props = Object.getOwnPropertyNames(from), destination;
 
-
-
+  props.forEach(function (name) {
+    if (typeof from[name] === 'object') {
+      if (typeof dest[name] !== 'object') {
+        dest[name] = {}
+      }
+      extend(dest[name],from[name]);
+    } else {
+      destination = Object.getOwnPropertyDescriptor(from, name);
+      Object.defineProperty(dest, name, destination);
+    }
+  });
+}
