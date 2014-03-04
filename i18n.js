@@ -65,7 +65,6 @@ i18n.showMissing = function(template) {
   }
 };
 
-
 /*
   Registering map
 */
