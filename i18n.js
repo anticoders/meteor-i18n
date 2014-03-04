@@ -1,4 +1,5 @@
-var get = function (object, array) {
+
+var get = function(object, array) {
   var o = object;
   for (var i in array) {
     if (!o) return null;
@@ -41,8 +42,26 @@ i18n.getLanguage = function() {
   return i18n._language;
 };
 
-i18n.map = function (language, map) {
-  if (!i18n._maps[language]) i18n._maps[language] = {};
+i18n.map = function(language, map) {
+  if(!i18n._maps[language]) i18n._maps[language] = {};
   _.extend(i18n._maps[language], map);
   i18n._dep.changed();
 };
+
+
+var extend = function(dest, from) {
+  var props = Object.getOwnPropertyNames(from), destination;
+
+  props.forEach(function (name) {
+    if (typeof from[name] === 'object') {
+      if (typeof dest[name] !== 'object') {
+        dest[name] = {}
+      }
+      extend(dest[name],from[name]);
+    } else {
+      destination = Object.getOwnPropertyDescriptor(from, name);
+      Object.defineProperty(dest, name, destination);
+    }
+  });
+}
+
