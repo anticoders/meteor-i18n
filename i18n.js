@@ -66,7 +66,7 @@ i18n.showMissing = function(template) {
 };
 
 /*
-  Registering map
+  Register map
 */
 i18n.map = function(language, map) {
   if(!maps[language]) maps[language] = {};
