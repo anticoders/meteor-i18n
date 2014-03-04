@@ -22,8 +22,6 @@ i18n = function(label) {
          '';
 };
 
-i18n.maps = maps;
-
 /*
   Register handlebars helper
 */
