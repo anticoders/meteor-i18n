@@ -1,67 +1,72 @@
+/*
+  just-i18n package for Meteor.js
+  author: Hubert OG <hubert@orlikarnia.com>
+*/
 
-var get = function(object, array) {
-  var o = object;
-  for (var i in array) {
-    if (!o) return null;
-    o = o[array[i]];
-  }
-  return o;
-};
+var maps = {};
+var defaultLanguage = 'en';
+var language = '';
+var dep = new Deps.Dependency();
 
-i18n = function (label) {
-  i18n._dep.depend();
+/*
+  Get the value for the given key
+*/
+i18n = function(label) {
+  dep.depend();
   if(typeof label !== 'string') return '';
-  var array = label.split('.');
-  return get(i18n._maps[i18n._language], array) || get(i18n._maps[i18n._default], array) || '';
+  return (maps[language] && maps[language][label]) ||
+         (maps[defaultLanguage] && maps[defaultLanguage][label]) ||
+         '';
 };
 
-if (Meteor.isClient) {
-  Meteor.startup(function () {
+i18n.maps = maps;
+
+/*
+  Register handlebars helper
+*/
+if(Meteor.isClient) {
+  Meteor.startup(function() {
     Handlebars.registerHelper('i18n', function (x) {
       return i18n(x);
     });
   });
 }
 
-i18n._maps = {};
-
-i18n._default = 'en';
-i18n._language = '';
-i18n._dep = new Deps.Dependency();
-
-i18n.setLanguage = function (language) {
-  i18n._language = language;
-  i18n._dep.changed();
+/*
+  Settings
+*/
+i18n.setLanguage = function(lng) {
+  language = lng;
+  dep.changed();
 };
-i18n.setDefaultLanguage = function (language) {
-  i18n._default = language;
-  i18n._dep.changed();
+
+i18n.setDefaultLanguage = function(lng) {
+  defaultLanguage = lng;
+  dep.changed();
 };
+
 i18n.getLanguage = function() {
-  i18n._dep.depend();
-  return i18n._language;
+  dep.depend();
+  return language;
 };
 
+/*
+  Registering map
+*/
 i18n.map = function(language, map) {
-  if(!i18n._maps[language]) i18n._maps[language] = {};
-  _.extend(i18n._maps[language], map);
-  i18n._dep.changed();
+  if(!maps[language]) maps[language] = {};
+  registerMap(language, '', false, map);
+  dep.changed();
 };
 
-
-var extend = function(dest, from) {
-  var props = Object.getOwnPropertyNames(from), destination;
-
-  props.forEach(function (name) {
-    if (typeof from[name] === 'object') {
-      if (typeof dest[name] !== 'object') {
-        dest[name] = {}
-      }
-      extend(dest[name],from[name]);
-    } else {
-      destination = Object.getOwnPropertyDescriptor(from, name);
-      Object.defineProperty(dest, name, destination);
-    }
-  });
-}
+var registerMap = function(language, prefix, dot, map) {
+  if(typeof map === 'string') {
+    maps[language][prefix] = map;
+  } else if(typeof map === 'object') {
+    if(dot) prefix = prefix + '.';
+    _.each(map, function(value, key) {
+      registerMap(language, prefix + key, true, value);
+    });
+  }
+};
 

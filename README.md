@@ -1,6 +1,6 @@
 # Internationalization for Meteor
 
-A simple (The simplest possible? Perhaps), no-fuss i18n package for Meteor.
+A simple (The simplest possible? Perhaps) i18n package for Meteor.
 
 # API
 
@@ -34,6 +34,7 @@ Example:
         purchase: 'buy now',
         basket: 'basket',
       },
+      'shipping.options': 'shipping',
     });
 
 
