@@ -53,7 +53,7 @@ i18n.getLanguage = function() {
 
 i18n.showMissing = function(template) {
   if(template) {
-    if(typeof template === string) {
+    if(typeof template === 'string') {
       missingTemplate = template;
     } else {
       missingTemplate = '[<%= label %>]';
