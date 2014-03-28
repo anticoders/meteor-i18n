@@ -26,11 +26,15 @@ i18n = function(label) {
   Register handlebars helper
 */
 if(Meteor.isClient) {
-  Meteor.startup(function() {
+  if (Package.ui) {
+    Package.ui.Handlebars.registerHelper('i18n', function (x) {
+      return i18n(x);
+    });
+  } else {
     Handlebars.registerHelper('i18n', function (x) {
       return i18n(x);
     });
-  });
+  }
 }
 
 /*
