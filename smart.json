@@ -3,7 +3,7 @@
   "description": "Internalization: minimal and best package",
   "homepage": "https://github.com/subhog/meteor-just-i18n",
   "author": "Hubert Orlik Grzesik <hubert@orlikarnia.com>",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "git": "https://github.com/subhog/meteor-just-i18n.git",
   "packages": {}
 }

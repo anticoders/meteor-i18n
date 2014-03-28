@@ -26,11 +26,11 @@ i18n = function(label) {
   Register handlebars helper
 */
 if(Meteor.isClient) {
-  if (Package.ui) {
-    Package.ui.Handlebars.registerHelper('i18n', function (x) {
+  if(UI) {
+    UI.registerHelper('i18n', function (x) {
       return i18n(x);
     });
-  } else {
+  } else if(Handlebars) {
     Handlebars.registerHelper('i18n', function (x) {
       return i18n(x);
     });
