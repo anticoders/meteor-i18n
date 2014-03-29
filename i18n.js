@@ -16,7 +16,7 @@ i18n = function(label) {
 } 
 
 if(Meteor.isClient) {
-  Handlebars.registerHelper('i18n', function(x) {
+  UI.registerHelper('i18n', function(x) {
     return i18n(x);
   });
 };
