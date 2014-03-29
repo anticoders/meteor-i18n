@@ -4,7 +4,7 @@ Package.describe({
 
 Package.on_use(function (api, where) {
   if(api.export) {
-    api.use(['underscore', 'handlebars', 'deps'], ['client', 'server']);
+    api.use(['underscore', 'spacebars', 'deps'], ['client', 'server']);
     api.export('i18n', ['client', 'server']);
   }
   api.add_files('i18n.js', ['client', 'server']);
