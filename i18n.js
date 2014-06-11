@@ -10,16 +10,27 @@ var dep = new Deps.Dependency();
 var missingTemplate = '';
 var showMissing = false;
 
-/*
-  Get the value for the given key
-*/
-i18n = function(label) {
+i18n = function(x) {
+  var label;
+  if(_.isArguments(x)){
+    x = _.toArray(x);
+    if(UI) x.pop(); //remove extra parameter added by blaze
+  } else {
+    x = _.toArray(arguments);
+  }
+
+  var label = x[0];
+  x.shift();
+  var params = x;
+
   dep.depend();
   if(typeof label !== 'string') return '';
-  return (maps[language] && maps[language][label]) ||
+  var str = (maps[language] && maps[language][label]) ||
          (maps[defaultLanguage] && maps[defaultLanguage][label]) ||
          (showMissing && _.template(missingTemplate, {language: language, defaultLanguage: defaultLanguage, label: label})) ||
          '';
+  str = replaceWithParams(str, params)
+  return str;
 };
 
 /*
@@ -27,15 +38,25 @@ i18n = function(label) {
 */
 if(Meteor.isClient) {
   if(UI) {
-    UI.registerHelper('i18n', function (x) {
-      return i18n(x);
+    UI.registerHelper('i18n', function () {
+      return i18n(arguments);
     });
   } else if(Handlebars) {
-    Handlebars.registerHelper('i18n', function (x) {
-      return i18n(x);
+    Handlebars.registerHelper('i18n', function () {
+      return i18n(arguments);
     });
   }
 }
+
+function replaceWithParams(string ,params) {
+    var formatted = string;
+    params.forEach(function(param , index){
+      var pos = index + 1;
+      formatted = formatted.replace("{" + pos + "}", param);
+    });
+
+    return formatted;
+};
 
 /*
   Settings
