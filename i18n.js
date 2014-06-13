@@ -10,13 +10,13 @@ var dep = new Deps.Dependency();
 var missingTemplate = '';
 var showMissing = false;
 
-i18n = function(x) {
+i18n = function() {
   var label;
-  if(_.isArguments(x)){
-    x = _.toArray(x);
-    if(UI) x.pop(); //remove extra parameter added by blaze
-  } else {
-    x = _.toArray(arguments);
+  var x = _.toArray(arguments);
+
+  /* remove extra parameter added by blaze */
+  if(typeof x[x.length-1] === 'object'){
+    x.pop(); 
   }
 
   var label = x[0];
@@ -39,11 +39,11 @@ i18n = function(x) {
 if(Meteor.isClient) {
   if(UI) {
     UI.registerHelper('i18n', function () {
-      return i18n(arguments);
+      return i18n.apply(this, arguments);
     });
   } else if(Handlebars) {
     Handlebars.registerHelper('i18n', function () {
-      return i18n(arguments);
+      return i18n.apply(this, arguments);
     });
   }
 }
@@ -52,7 +52,7 @@ function replaceWithParams(string ,params) {
     var formatted = string;
     params.forEach(function(param , index){
       var pos = index + 1;
-      formatted = formatted.replace("{" + pos + "}", param);
+      formatted = formatted.replace("{$" + pos + "}", param);
     });
 
     return formatted;
