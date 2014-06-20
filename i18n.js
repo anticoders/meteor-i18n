@@ -3,33 +3,39 @@
   author: Hubert OG <hubert@orlikarnia.com>
 */
 
-var maps = {};
-var defaultLanguage = 'en';
-var language = '';
-var dep = new Deps.Dependency();
-var missingTemplate = '';
-var showMissing = false;
 
+var maps            = {};
+var language        = '';
+var defaultLanguage = 'en';
+var missingTemplate = '';
+var showMissing     = false;
+var dep             = new Deps.Dependency();
+
+
+/*
+  Convert key to internationalized version
+*/
 i18n = function() {
+  dep.depend();
+
   var label;
-  var x = _.toArray(arguments);
+  var args = _.toArray(arguments);
 
   /* remove extra parameter added by blaze */
-  if(typeof x[x.length-1] === 'object'){
-    x.pop(); 
+  if(typeof args[args.length-1] === 'object') {
+    args.pop(); 
   }
 
-  var label = x[0];
-  x.shift();
-  var params = x;
+  var label = args[0];
+  args.shift();
 
-  dep.depend();
+  
   if(typeof label !== 'string') return '';
   var str = (maps[language] && maps[language][label]) ||
          (maps[defaultLanguage] && maps[defaultLanguage][label]) ||
          (showMissing && _.template(missingTemplate, {language: language, defaultLanguage: defaultLanguage, label: label})) ||
          '';
-  str = replaceWithParams(str, params)
+  str = replaceWithParams(str, args)
   return str;
 };
 
@@ -48,14 +54,14 @@ if(Meteor.isClient) {
   }
 }
 
-function replaceWithParams(string ,params) {
-    var formatted = string;
-    params.forEach(function(param , index){
-      var pos = index + 1;
-      formatted = formatted.replace("{$" + pos + "}", param);
-    });
+function replaceWithParams(string, params) {
+  var formatted = string;
+  params.forEach(function(param , index){
+    var pos = index + 1;
+    formatted = formatted.replace("{$" + pos + "}", param);
+  });
 
-    return formatted;
+  return formatted;
 };
 
 /*

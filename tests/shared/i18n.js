@@ -1,4 +1,4 @@
-function config(){
+function config() {
   i18n.setLanguage('en_US');
   i18n.map('en', {
     hello: 'world',
@@ -10,6 +10,7 @@ function config(){
     'shipping.options': 'shipping'
   });
 }
+
 Tinytest.add('i18n direct call1', function (test) {
   config();
   var convertedString = i18n('hello');
