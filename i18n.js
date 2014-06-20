@@ -3,23 +3,40 @@
   author: Hubert OG <hubert@orlikarnia.com>
 */
 
-var maps = {};
+
+var maps            = {};
+var language        = '';
 var defaultLanguage = 'en';
-var language = '';
-var dep = new Deps.Dependency();
 var missingTemplate = '';
-var showMissing = false;
+var showMissing     = false;
+var dep             = new Deps.Dependency();
+
 
 /*
-  Get the value for the given key
+  Convert key to internationalized version
 */
-i18n = function(label) {
+i18n = function() {
   dep.depend();
+
+  var label;
+  var args = _.toArray(arguments);
+
+  /* remove extra parameter added by blaze */
+  if(typeof args[args.length-1] === 'object') {
+    args.pop(); 
+  }
+
+  var label = args[0];
+  args.shift();
+
+  
   if(typeof label !== 'string') return '';
-  return (maps[language] && maps[language][label]) ||
+  var str = (maps[language] && maps[language][label]) ||
          (maps[defaultLanguage] && maps[defaultLanguage][label]) ||
          (showMissing && _.template(missingTemplate, {language: language, defaultLanguage: defaultLanguage, label: label})) ||
          '';
+  str = replaceWithParams(str, args)
+  return str;
 };
 
 /*
@@ -27,15 +44,25 @@ i18n = function(label) {
 */
 if(Meteor.isClient) {
   if(UI) {
-    UI.registerHelper('i18n', function (x) {
-      return i18n(x);
+    UI.registerHelper('i18n', function () {
+      return i18n.apply(this, arguments);
     });
   } else if(Handlebars) {
-    Handlebars.registerHelper('i18n', function (x) {
-      return i18n(x);
+    Handlebars.registerHelper('i18n', function () {
+      return i18n.apply(this, arguments);
     });
   }
 }
+
+function replaceWithParams(string, params) {
+  var formatted = string;
+  params.forEach(function(param , index){
+    var pos = index + 1;
+    formatted = formatted.replace("{$" + pos + "}", param);
+  });
+
+  return formatted;
+};
 
 /*
   Settings
