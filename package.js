@@ -1,11 +1,12 @@
 Package.describe({
   name:     "anticoders:i18n",
-  version:  "0.4.0",
+  version:  "0.4.1",
   summary:  "Internalization: simplest package",
   git:      "https://github.com/anticoders/meteor-i18n.git",
 });
 
 Package.on_use(function (api, where) {
+  api.versionsFrom('0.9.0');
   api.use(['underscore', 'ui', 'deps'], ['client', 'server']);
   api.export('i18n', ['client', 'server']);
   api.add_files('i18n.js', ['client', 'server']);
