@@ -1,3 +1,10 @@
+Notes for updating to Meteor 0.9.0
+----------------------------------
+
+This package is now called `anti:i18n`.
+
+
+
 # Internationalization for Meteor
 
 A simple (The simplest possible? Perhaps) i18n package for Meteor.

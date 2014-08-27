@@ -1,6 +1,6 @@
 Package.describe({
-  name:     'anticoders:i18n',
-  version:  '0.4.2',
+  name:     'anti:i18n',
+  version:  '0.4.3',
   summary:  'Internalization: simplest package',
   git:      'https://github.com/anticoders/meteor-i18n.git',
 });
