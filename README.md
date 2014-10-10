@@ -82,6 +82,18 @@ Decide whether to show a warning when there's no translation in the current and 
 
 Example: `i18n.showMissing('[no translation for "<%= label %>" in <%= language %>]');`
 
+### Replacing variables in translations with values
+
+It's also possible to put variables in your translations and replace them with values.
+
+If the `store.purchase` translation looked like this: `'You have bought ${1} apples'
+
+Calling the i18n method/helper with an additional argument like so:
+
+`i18n('store.purchase', 20)` or `{{i18n 'store.purchase' 20}}` will result in this translation: `'You have bought 20 apples'`.
+
+You can use as many variables as you want in your translations as long as they follow this pattern, the numbers of the integer inside of ${} will correspond with the number of arguments. These variables correspond with the same variables you give to the functions.
+
 
 
 
