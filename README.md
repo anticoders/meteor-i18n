@@ -28,6 +28,10 @@ Get your localized text in Handlebars.
 Example: `{{i18n "store.purchase"}}`.
 
 
+## `{{i18n "sayHello" userName}}`
+
+Provide arguments
+
 
 ## `i18n.map(language, map)`
 
@@ -36,7 +40,7 @@ Add new text map.
 Example:
 
     i18n.map('en', {
-      hello: 'world',
+      sayHello: 'Hi {$1}',
       store: {
         purchase: 'buy now',
         basket: 'basket',
