@@ -27,6 +27,11 @@ Get your localized text in Handlebars.
 
 Example: `{{i18n "store.purchase"}}`.
 
+##  `{{i18n label params...}}`
+ {$1} and {$2}
+Get your localized text with params
+
+Example: `{{i18n "store.purchased" "foo" "bar"}}`
 
 
 ## `i18n.map(language, map)`
@@ -41,9 +46,9 @@ Example:
         purchase: 'buy now',
         basket: 'basket',
       },
+      purchased: '{$1 and $2}',
       'shipping.options': 'shipping',
     });
-
 
 
 ## `i18n.setLanguage(language)`
