@@ -6,6 +6,7 @@
 
 var maps            = {};
 var language        = '';
+var languages       = [];
 var defaultLanguage = 'en';
 var missingTemplate = '';
 var showMissing     = false;
@@ -26,7 +27,7 @@ i18n = function() {
     args.pop(); 
   }
 
-  var label = args[0];
+  label = args[0];
   args.shift();
 
   
@@ -82,6 +83,13 @@ i18n.getLanguage = function() {
   return language;
 };
 
+i18n.getLanguages = function(){
+  dep.depend();
+  var index = languages.indexOf(language);
+  languages.splice(0, 0, languages.splice(index, 1)[0]);
+  return languages;
+}
+
 i18n.showMissing = function(template) {
   if(template) {
     if(typeof template === 'string') {
@@ -102,6 +110,7 @@ i18n.showMissing = function(template) {
 i18n.map = function(language, map) {
   if(!maps[language]) maps[language] = {};
   registerMap(language, '', false, map);
+  languages.push(language);
   dep.changed();
 };
 
@@ -115,4 +124,3 @@ var registerMap = function(language, prefix, dot, map) {
     });
   }
 };
-
