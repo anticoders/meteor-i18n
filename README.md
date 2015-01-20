@@ -26,6 +26,7 @@ Example: `i18n('store.purchase');`.
 Get your localized text in Handlebars.
 
 Example: `{{i18n "store.purchase"}}`.
+
 Example: `{{i18n "path" "here" "there"}}`
 
 ## `{{i18n "sayHello" userName}}`
