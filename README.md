@@ -21,17 +21,12 @@ Example: `i18n('store.purchase');`.
 
 
 
-## `{{i18n label}}`
+## `{{i18n label [params...]}}`
 
 Get your localized text in Handlebars.
 
 Example: `{{i18n "store.purchase"}}`.
-
-##  `{{i18n label params...}}`
- {$1} and {$2}
-Get your localized text with params
-
-Example: `{{i18n "store.purchased" "foo" "bar"}}`
+Example: `{{i18n "path" "here" "there"}}`
 
 ## `{{i18n "sayHello" userName}}`
 
@@ -50,7 +45,7 @@ Example:
         purchase: 'buy now',
         basket: 'basket',
       },
-      purchased: '{$1 and $2}',
+      path: 'From: {$1} to: {$2}',
       'shipping.options': 'shipping',
     });
 
