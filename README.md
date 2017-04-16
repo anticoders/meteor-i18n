@@ -13,11 +13,13 @@ A simple (The simplest possible? Perhaps) i18n package for Meteor.
 
 
 
-## `i18n(label)`
+## `i18n(label, [parameters])`
 
 Get your localized text in Javascript.
 
 Example: `i18n('store.purchase');`.
+
+`i18n('store.purchase.complete', 'a TV'); // Returns "You just purchased a TV" (check the example below)`
 
 
 
@@ -45,6 +47,7 @@ Example:
       store: {
         purchase: 'buy now',
         basket: 'basket',
+        'complete': 'You just purchased {$1}'
       },
       path: 'From: {$1} to: {$2}',
       'shipping.options': 'shipping',
