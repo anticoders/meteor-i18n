@@ -40,6 +40,34 @@ i18n = function() {
 };
 
 /*
+  Get translation in specific language
+*/
+i18n.getTranslation = function() {
+  dep.depend();
+
+  var label;
+  var args = _.toArray(arguments);
+
+  /* remove extra parameter added by blaze */
+  if(typeof args[args.length-1] === 'object') {
+    args.pop(); 
+  }
+
+  var specifLang = args[0];
+  var label = args[1];
+  args.shift();
+  args.shift();
+  
+  if(typeof label !== 'string') return '';
+  var str = (maps[specifLang] && maps[specifLang][label]) || (maps[language] && maps[language][label]) ||
+         (maps[defaultLanguage] && maps[defaultLanguage][label]) ||
+         (showMissing && _.template(missingTemplate, {language: language, defaultLanguage: defaultLanguage, label: label})) ||
+         '';
+  str = replaceWithParams(str, args)
+  return str;
+};
+
+/*
   Register handlebars helper
 */
 if(Meteor.isClient) {
