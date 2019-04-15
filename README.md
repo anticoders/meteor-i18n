@@ -20,6 +20,12 @@ Get your localized text in Javascript.
 Example: `i18n('store.purchase');`.
 
 
+## `i18n.getTranslation(language, label)`
+
+Get a text localized in a specific language.
+
+Example: `i18n('en_US', 'store.purchase');`.
+
 
 ## `{{i18n label [params...]}}`
 
